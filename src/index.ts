@@ -1,33 +1,28 @@
-interface Pokemon {
-    name:string;
-    level:number;
+import { Pokemon } from './models/Pokemon';
+import { PokemonRepository } from './repositories/PokemonRepository';
+import { PokemonService } from './services/PokemonService';
+
+const DEFAULT_POKEMONS = {
+  bulbasaur: new Pokemon('bulbasaur', 96, { hp: 95, attack: 65, defense: 90, speed: 70 }),
+  charmander: new Pokemon('charmander', 79, { hp: 78, attack: 95, defense: 82, speed: 88 }),
+  squirtle: new Pokemon('squirtle', 64, { hp: 78, attack: 75, defense: 68, speed: 65 }),
+  pikachu: new Pokemon('pikachu', 81, { hp: 85, attack: 110, defense: 75, speed: 120 }),
+  mewtwo: new Pokemon('mewtwo', 100, { hp: 106, attack: 130, defense: 90, speed: 130 }),
+  dragonite: new Pokemon('dragonite', 88, { hp: 91, attack: 134, defense: 95, speed: 80 })
+};
+
+const pokemonRepository = new PokemonRepository();
+const pokemonService = new PokemonService(pokemonRepository);
+
+function main() {
+  pokemonRepository.addPokemon(DEFAULT_POKEMONS.mewtwo);
+  pokemonRepository.addPokemon(DEFAULT_POKEMONS.dragonite);
+  pokemonRepository.addPokemon(DEFAULT_POKEMONS.bulbasaur); 
+  const averageLevel = pokemonService.getAverageLevel();
+  const fastestPokemon = pokemonService.getFastestPokemon();
+  if (averageLevel < 80) throw new Error("Average level is less than 80");
+  console.log("Average level: ", averageLevel);
+  console.log("Fastest pokemon: ", fastestPokemon);
 }
 
-function findPokemonByName(pokemonTeam:Pokemon[], name: string) {
-  return pokemonTeam.find(pokemon => pokemon.name === name) || null;
-}
-
-function filterByLevel(pokemonTeam:Pokemon[], minLevel: number) {
-  return pokemonTeam.filter(pokemon => pokemon.level > minLevel);
-}
-
-function averageLevel(pokemonTeam:Pokemon[]) {
-  const total = pokemonTeam.reduce((sum, pokemon) => sum + pokemon.level, 0);
-  return total / pokemonTeam.length;
-}
-
-const pokemonTeam = [
-  { name: "bulbasaur", level: 96 },
-  { name: "charmander", level: 79 },
-  { name: "squirtle", level: 64 },
-  { name: "pikachu", level: 81 }
-];
-
-console.log("Find pokemon by name 'charmander':", findPokemonByName(pokemonTeam, "charmander"));
-// { name: "charmander", level: 79 }
-
-console.log("Pokemon with level above 80:", filterByLevel(pokemonTeam, 80));
-// [ { name: "bulbasaur", level: 96 }, { name: "pikachu", level: 81 } ]
-
-console.log("Average level:", averageLevel(pokemonTeam));
-// 80
+main();

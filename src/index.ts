@@ -17,7 +17,7 @@ const pokemonService = new PokemonService(pokemonRepository);
 function main() {
   pokemonRepository.addPokemon(DEFAULT_POKEMONS.mewtwo);
   pokemonRepository.addPokemon(DEFAULT_POKEMONS.dragonite);
-  pokemonRepository.addPokemon(DEFAULT_POKEMONS.bulbasaur); 
+  pokemonRepository.addPokemon(DEFAULT_POKEMONS.pikachu); 
   const averageLevel = pokemonService.getAverageLevel();
   const fastestPokemon = pokemonService.getFastestPokemon();
   if (averageLevel < 80) throw new Error("Average level is less than 80");

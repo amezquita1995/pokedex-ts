@@ -24,7 +24,6 @@ export class PokemonService {
         }
         const fastestPokemon = pokemonList.reduce(
             (currentFastest, pokemon) => {
-
                 if (pokemon.stats.speed > currentFastest.stats.speed) {
                     return pokemon;
                 }
